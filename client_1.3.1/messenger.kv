@@ -1,0 +1,259 @@
+#:kivy 1.11.1
+
+<chat>:
+
+    text: msg
+    chat: chat
+
+    GridLayout:
+        rows: 2
+        cols: 1
+
+        Label:
+            id: chat 
+            size_hint: [None,None]
+            text_size: self.size
+            padding: [20,20]
+            font_name: "F25_Bank_Printer"
+            halign: 'left'
+            height: root.size[1] - 40
+            width: root.size[0]
+            markup: True
+            on_ref_press: root.check(args[1])
+
+        GridLayout:
+            cols: 2
+            rows: 1
+
+            canvas.before:
+                Color:
+                    rgba: 0.8, 0, 0.2, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                size_hint_x: 0.8
+                TextInput:
+                    id: msg
+                    font_size: 20
+                    font_name: "F25_Bank_Printer"
+                    multiline: False
+                    focus: True
+                    on_text_validate: root.on_press()
+                    text_validate_unfocus: False
+            BoxLayout:
+                size_hint_x: 0.2
+                Button:
+                    id: 'send'
+                    text: "send"
+                    font_name: "CodePredators-Regular"
+                    on_press: root.on_press()
+
+    AnchorLayout:
+        orientation: 'vertical'
+        anchor_x: 'right'
+        anchor_y: 'top'
+
+        padding: [20,20,20,20]
+        
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: [None,None]
+            width: 50
+            height: 30
+
+            canvas.before:
+                Color:
+                    rgba: 0.6, 0.5, 0.2, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Button:
+                id: menu
+                text: 'File'
+                font_name: "CodePredators-Regular"
+                background_normal: 'button_open.png'
+                background_down: 'button_next.png'
+                on_press: root.file_send()
+        
+        # FileChooserIconLayout:
+        #     id: fc
+            # FileChooserIconLayout
+            # FileChooserListLayout
+
+<fileselector>:
+
+    path: path
+
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: "Select a File to send"
+            size_hint: [1,0.1]
+        FileChooserIconView:
+            id: fcGoa
+            size_hint: [1,0.8]
+            # filters: ['*.txt']
+            on_selection:  path.text = self.selection and self.selection[0] or ''
+        GridLayout:
+            cols: 2
+            rows: 1
+
+            size_hint: [1,0.1]
+
+            Label:
+                id: path
+                text: "Selected File path will appear here"
+                size_hint: [0.8,0.1]
+            Button:
+                id: menu
+                text: 'select'
+                size_hint: [0.2,0.1]
+                on_press: root.send(path.text)
+
+    AnchorLayout:
+        orientation: 'vertical'
+        anchor_x: 'left'
+        anchor_y: 'top'
+
+        padding: [20,20,20,20]
+        
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: [None,None]
+            width: 50
+            height: 30
+
+            canvas.before:
+                Color:
+                    rgba: 0.6, 0.5, 0.2, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Button:
+                id: menu
+                text: 'Back'
+                font_name: "CodePredators-Regular"
+                background_normal: 'button_open.png'
+                background_down: 'button_next.png'
+                on_press: root.backchat()
+
+<welcome>:
+
+    nami: nme
+    lab: wel
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'top'
+
+        Label:
+            text_size: self.size
+            halign: 'center'
+            font_name: "MarkerF"
+            valign: 'top'
+            font_size: '40sp'
+            color: "00A2C8"
+            text: 'Welcome to PCS project'
+
+
+    AnchorLayout:
+        orientation: 'vertical'
+        anchor_x: 'center'
+        anchor_y: 'center'
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (None,None)
+            width: root.size[0]*0.5
+            height: root.size[1]*0.5
+            padding: [20,20]
+
+            canvas:
+                Color:
+                    rgba: 0 / 255., 162 / 255., 232 / 255., 1
+                RoundedRectangle:
+                    pos: [self.pos[0]-5,self.pos[1]-5]
+                    size: [self.size[0]+10,self.size[1]+10]
+                    radius: [(20, 20), (20, 20), (20, 20), (20, 20)]
+
+                Color:
+                    rgba: 50 / 255., 57 / 255., 161 / 255., 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [(20, 20), (20, 20), (20, 20), (20, 20)]
+
+            Label:
+                id: wel
+                text_size: self.size
+                halign: 'center'
+                valign: 'center'
+                font_size: '20sp'
+                font_name: "F25_Bank_Printer"
+                color: "99D9D2"
+                text: 'Enter your name'
+            TextInput:
+                id: nme
+                background_normal: 'button_next.png'
+                font_name: "F25_Bank_Printer"
+                background_color: (0,0,0,1)
+                foreground_color: [0 / 255., 162 / 255., 232 / 255., 1]
+                size_hint: [1,0.2]
+                font_size: 20
+                multiline: False
+                focus: True
+                on_text_validate: root.next()
+            Button:
+                id:'test'
+                text: 'next'
+                font_name: "F25_Bank_Printer"
+                background_normal: 'button_next.png'
+                background_down: 'button_open.png'
+                size_hint_y: 0.2
+                on_press: root.next()
+
+<errorpage>:
+    lab: wel
+
+    AnchorLayout:
+        orientation: 'vertical'
+        anchor_x: 'center'
+        anchor_y: 'center'
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: (None,None)
+            width: root.size[0]*0.5
+            height: root.size[1]*0.5
+            padding: [0,20]
+
+            canvas:
+                Color:
+                    rgba: 0 / 255., 162 / 255., 232 / 255., 1
+                RoundedRectangle:
+                    pos: [self.pos[0]-5,self.pos[1]-5]
+                    size: [self.size[0]+10,self.size[1]+10]
+                    radius: [(20, 20), (20, 20), (20, 20), (20, 20)]
+
+                Color:
+                    rgba: 50 / 255., 57 / 255., 161 / 255., 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [(20, 20), (20, 20), (20, 20), (20, 20)]
+
+            Label:
+                id: wel
+                text_size: self.size
+                halign: 'center'
+                valign: 'center'
+                font_size: '20sp'
+                font_name: "CodePredators-Regular"
+                color: "99D9D2"
+                text: ''
+
+
